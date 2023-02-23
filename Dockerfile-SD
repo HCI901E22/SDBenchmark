@@ -1,0 +1,22 @@
+FROM zip3rzaro/sd-simple
+
+# Install base utilities
+#RUN apt-get update && \
+#    apt-get install -y build-essentials  && \
+#    apt-get install -y wget && \
+#    apt-get clean && \
+#    rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install libgl1 -y
+
+RUN git clone https://github.com/Stability-AI/stablediffusion.git sd-org
+
+RUN conda env update -f sd-org/environment.yaml -n myenv
+
+# Make RUN commands use the new environment:
+SHELL ["conda", "run", "-n", "myenv", "/bin/bash", "-c"]
+
+COPY v2-1_768-ema-pruned.ckpt sd2-1.ckpt
+
+# The code to run when container is started:
+ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "myenv", "python", "sd-org/scripts/txt2img.py","--prompt", "a professional photograph of an astronaut riding a horse","--ckpt", "sd2-1.ckpt","--config", "sd-org/configs/stable-diffusion/v2-inference-v.yaml", "--H", "768", "--W", "768"]

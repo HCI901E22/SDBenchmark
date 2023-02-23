@@ -1,0 +1,34 @@
+FROM python:3.10.6-bullseye
+
+
+#COPY requirements.txt .
+#RUN pip install -r requirements.txt
+#CMD python main.py
+
+SHELL ["/bin/bash", "-c"]
+RUN git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git sd-opt
+RUN useradd -m sd
+RUN chown sd:sd sd-opt
+WORKDIR sd-opt
+
+COPY v2-1_768-ema-pruned.ckpt models/Stable-diffusion/sd2-1.ckpt
+
+COPY webui-user.sh webui-user.sh
+
+COPY main.py .
+
+RUN echo webui-user.sh
+
+RUN echo $TORCH_COMMAND
+
+RUN source ./webui-user.sh
+
+RUN chmod +x webui.sh && cd ..
+
+
+
+USER sd
+
+RUN ./webui.sh --xformers --skip-torch-cuda-test
+RUN pip list
+CMD python launch.py
