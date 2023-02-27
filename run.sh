@@ -8,8 +8,8 @@ pip install Pillow
 
 echo "Starting api"
 
-./webui.sh --xformers --skip-install --listen --nowebui &
+./webui.sh --xformers --skip-install --listen --enable-insecure-extension-access
 
-echo "Starting generation"
+#echo "Starting generation"
 
-python main.py
+#python main.py

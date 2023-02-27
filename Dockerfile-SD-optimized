@@ -11,6 +11,7 @@ RUN git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git sd-opt
 RUN useradd -m sd
 RUN chown -R sd:sd sd-opt
 WORKDIR sd-opt
+RUN cd models && mkdir Codeformer && mkdir ESRGAN && mkdir GFPGAN && mkdir hypernetworks && mkdir LDSR && mkdir Lora && mkdir SwinIR 
 
 COPY v2-1_768-ema-pruned.ckpt models/Stable-diffusion/sd2-1.ckpt
 
