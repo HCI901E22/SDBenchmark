@@ -6,29 +6,32 @@ FROM python:3.10.6-bullseye
 #CMD python main.py
 
 SHELL ["/bin/bash", "-c"]
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
 RUN git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git sd-opt
 RUN useradd -m sd
-RUN chown sd:sd sd-opt
+RUN chown -R sd:sd sd-opt
 WORKDIR sd-opt
 
 COPY v2-1_768-ema-pruned.ckpt models/Stable-diffusion/sd2-1.ckpt
 
 COPY webui-user.sh webui-user.sh
 
-COPY main.py .
-
-RUN echo webui-user.sh
-
-RUN echo $TORCH_COMMAND
-
-RUN source ./webui-user.sh
+#COPY main.py .
 
 RUN chmod +x webui.sh && cd ..
 
-
-
 USER sd
 
-RUN ./webui.sh --xformers --skip-torch-cuda-test
-RUN pip list
-CMD python launch.py
+RUN source ./webui-user.sh
+
+#RUN pip install -r requirements_versions.txt && pip install -r requirements.txt
+
+COPY install.py .
+#RUN python main.py --xformers --exit --skip-torch-cuda-test
+COPY install.sh .
+RUN ./install.sh
+
+EXPOSE 7861 7860
+#COPY main.py .
+COPY run.sh .
+CMD ./run.sh

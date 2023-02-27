@@ -10,7 +10,7 @@
 clone_dir="sd-opt"
 
 # Commandline arguments for webui.py, for example: export COMMANDLINE_ARGS="--medvram --opt-split-attention"
-export COMMANDLINE_ARGS="--api"
+#export COMMANDLINE_ARGS="--api"
 
 # python3 executable
 #python_cmd="python3"
@@ -22,7 +22,7 @@ export COMMANDLINE_ARGS="--api"
 #venv_dir="venv"
 
 # script to launch to start the app
-export LAUNCH_SCRIPT="main.py"
+#export LAUNCH_SCRIPT="main.py"
 
 # install command for torch
 #export TORCH_COMMAND="pip install torch==1.13.1+cu116 --extra-index-url https://download.pytorch.org/whl/cu116"
@@ -41,6 +41,6 @@ export LAUNCH_SCRIPT="main.py"
 #export BLIP_COMMIT_HASH=""
 
 # Uncomment to enable accelerated launch
-export ACCELERATE="True"
+#export ACCELERATE="True"
 
 ###########################################

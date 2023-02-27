@@ -1,0 +1,13 @@
+FROM zip3rzaro/sd-optimized:plain-latest
+
+COPY deliberate_v11.safetensors models/Stable-diffusion/
+COPY dreamshaper_331BakedVae.safetensors models/Stable-diffusion/
+COPY v1-5-pruned-emaonly.ckpt models/Stable-diffusion/sd1-5.ckpt
+COPY v1-5-pruned-emaonly.safetensors models/Stable-diffusion/sd1-5.safetensors
+COPY v2-1_512-ema-pruned.safetensors models/Stable-diffusion/v2-1_512.safetensors
+COPY v2-1_768-ema-pruned.safetensors models/Stable-diffusion/v2-1.safetensors
+
+EXPOSE 7861
+COPY main.py .
+COPY run.sh .
+CMD ./run.sh
